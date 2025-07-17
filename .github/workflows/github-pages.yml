@@ -1,27 +1,24 @@
-name: GitHub Pages Deploy
+name: Deploy to GitHub Pages
 
 on:
   push:
     branches:
-      - main  # or 'master'
+      - main
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v3
 
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: '3.1'
+          ruby-version: '3.2' # Use the Ruby version required by Chirpy
+          bundler-cache: true
 
       - name: Install dependencies
-        run: |
-          gem install bundler
-          bundle config set path 'vendor/bundle'
-          bundle install
+        run: bundle install
 
       - name: Build site
         run: bundle exec jekyll build
